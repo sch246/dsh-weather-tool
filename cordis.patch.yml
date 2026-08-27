@@ -1,0 +1,7 @@
+# Deployment-specific credentials and locations belong in the profile's local
+# patch layer as an id-targeted config override for this row.
+
+- insert:
+    - id: weather-tool
+      name: dsh-weather-tool
+      config: {}

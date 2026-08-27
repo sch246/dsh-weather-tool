@@ -1,0 +1,49 @@
+{
+  "name": "dsh-weather-tool",
+  "version": "0.1.0",
+  "description": "A small DeepSeek Harness tool for QWeather current conditions and three-day forecasts.",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    ".intent",
+    "AGENTS.md",
+    "index.mjs",
+    "cordis.patch.yml",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "uninstall": "bash scripts/uninstall.sh",
+    "test": "node --test"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "weather",
+    "qweather"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sch246/dsh-weather-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sch246/dsh-weather-tool/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

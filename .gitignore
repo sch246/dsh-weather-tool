@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+.dsh/
+.env*
+!.env.example
+*.pem
+*.key
+*.p8
+*.secret
+*.bak-*
+*.orig
+cordis.patch.local.yml
