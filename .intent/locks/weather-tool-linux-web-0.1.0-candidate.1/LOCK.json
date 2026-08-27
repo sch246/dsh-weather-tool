@@ -1,0 +1,80 @@
+{
+  "kind": "realization",
+  "id": "dsh-weather-tool-linux-web",
+  "revision": "0.1.0-candidate.1",
+  "status": "candidate",
+  "protocol": {
+    "id": "meta-intent",
+    "revision": "0.2"
+  },
+  "package": {
+    "id": "dsh-weather-tool",
+    "revision": "0.1.0-draft.3"
+  },
+  "state": {
+    "revision": "0.1.0-draft.3",
+    "entry": {
+      "path": "inputs/state/STATE.json",
+      "digest": "sha256:176b28e2bb24fe14d5727ef68c05db552b71a244c64c5bf8616ec3c0951a97f3"
+    },
+    "document": {
+      "path": "inputs/state/STATE.md",
+      "digest": "sha256:bab54fb3eab92adb3f9dbdd4fe5666437a519c4536df03660ece413c27fb5a9e"
+    }
+  },
+  "logs": [
+    {
+      "path": "../../logs/2026-08-27-extraction-and-privacy.md",
+      "digest": "sha256:8422ff7061c38a43210f9cf949a2dd1c75ffeef7db83b16523c21e9f13c4a3a4"
+    },
+    {
+      "path": "../../logs/2026-08-27-extraction-cutover-evidence.md",
+      "digest": "sha256:f1d8d6e7c891695aadffc659cacebbf761301da1c566c7f30939c4510d385c42"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/acceptance.md",
+      "digest": "sha256:b93a772a4cbf5cae4825a682160b5cbb121af16a2aa18bc65da206d74598e78e"
+    },
+    {
+      "path": "artifacts/install.md",
+      "digest": "sha256:b6f8465cd3e1e08e3e24472b6c8b7d8efa4c6f8770bf3b00237870ec3b158ee9"
+    }
+  ],
+  "target": {
+    "kind": "git",
+    "uri": "https://github.com/sch246/dsh-weather-tool.git",
+    "commit": "7a47b38a02338bca597723d55cf20519beb931d2",
+    "paths": [
+      "AGENTS.md",
+      "LICENSE",
+      "README.md",
+      "cordis.patch.yml",
+      "index.mjs",
+      "package.json",
+      "scripts",
+      "test"
+    ]
+  },
+  "acceptance": {
+    "status": "incomplete",
+    "evidence": [
+      {
+        "id": "candidate-unit-and-structure",
+        "artifact": "artifacts/acceptance.md",
+        "result": "six unit tests and package, syntax, protocol, diff, and privacy checks passed"
+      },
+      {
+        "id": "candidate-live-cutover",
+        "artifact": "artifacts/acceptance.md",
+        "result": "linked bundle served HTTP 200 and completed current plus three-day weather retrieval"
+      },
+      {
+        "id": "candidate-uninstall-boundary",
+        "artifact": "artifacts/install.md",
+        "result": "procedure is bounded but has not been exercised after the linked-package cutover"
+      }
+    ]
+  }
+}
