@@ -1,6 +1,6 @@
 # Weather tool intent
 
-Status: user-grounded draft with an unsealed realization.
+Status: user-grounded draft awaiting a DeepSeek Harness alpha.2 realization. Earlier candidate and deployment evidence is historical; no realization has been installed or verified against `dsh-v0.1.2-alpha.2`.
 
 ## Intent
 
@@ -18,7 +18,7 @@ Provide a small DeepSeek Harness plugin that lets the model query QWeather for c
 
 - `WEATHER-001`: With valid profile-local configuration, `get_weather` returns current conditions for an explicit location and for the configured default.
 - `WEATHER-002`: A forecast failure still returns the successful current conditions; a city lookup or current-weather failure returns a bounded Chinese error result.
-- `WEATHER-003`: Package tests verify config validation, Ed25519 JWT claims/signature, authenticated request construction, response formatting, default selection, and registration disposal.
+- `WEATHER-003`: Missing or invalid required configuration fails visibly before a working tool is exposed. Disable, reload, and uninstall release the registration so no stale `get_weather` tool remains.
 - `WEATHER-004`: The package installs through a DSH bundle link without modifying Harness source; composed config contains the package entry and profile-local override, and uninstall removes the bundle registration without deleting credentials.
 - `WEATHER-005`: Repository history contains no real API host, account identifier, private key or key path, precise deployment location, real query fixture, or captured deployment response.
 
@@ -28,6 +28,7 @@ Provide a small DeepSeek Harness plugin that lets the model query QWeather for c
 - Missing or invalid required configuration fails during plugin load; do not silently register a non-working tool.
 - Installation, restart, publication, and remote repository creation require user authority. The user authorized extraction and repository creation in the source record.
 - Do not introduce a Harness source patch or a client bundle for this Host-only tool.
+- STATE and real profile observations own behavior acceptance. Type checking, builds, and focused implementation checks are mechanical evidence only and do not independently accept the tool behavior.
 
 ## Non-goals
 
@@ -39,4 +40,4 @@ An import-free ESM entry can register a plain DSH tool definition and avoid unpu
 
 ## Current reality and open tensions
 
-The local Web profile now loads the linked package and has completed a successful real query after the old profile-local executable left the configuration graph. Candidate 1 binds the first public source commit and the observed install/runtime evidence; acceptance remains incomplete until the linked-package uninstall boundary is exercised.
+The next target is DeepSeek Harness `dsh-v0.1.2-alpha.2` at revision `0a53fb55bea101816fa226bb964ae2bed71c343b`. The Host-only contribution still requires no Harness source patch or browser client. Candidate 1 binds historical source and deployment evidence for an earlier target and is not selected for this state. Alpha.2 linked-package resolution, profile-local override, composed configuration, explicit and default real queries, forecast degradation, lifecycle-owned registration, and credential-preserving uninstall remain unobserved.

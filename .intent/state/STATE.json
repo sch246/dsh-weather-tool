@@ -1,12 +1,14 @@
 {
   "$schema": "meta-intent/0.2/state",
   "id": "dsh-weather-tool",
-  "revision": "0.1.0-draft.3",
+  "revision": "0.1.0-draft.4",
   "status": "draft",
   "document": "STATE.md",
   "logs": [
     "../logs/2026-08-27-extraction-and-privacy.md",
-    "../logs/2026-08-27-extraction-cutover-evidence.md"
+    "../logs/2026-08-27-extraction-cutover-evidence.md",
+    "../logs/2026-09-01-harness-alpha2-recomposition.md",
+    "../logs/2026-09-01-state-authority-and-runtime-acceptance.md"
   ],
   "protocol": {
     "id": "meta-intent",
@@ -22,11 +24,16 @@
       "kind": "git-repository",
       "uri": "https://github.com/sch246/dsh-weather-tool.git",
       "revision": "7a47b38a02338bca597723d55cf20519beb931d2",
-      "scope": "immutable source identity selected by candidate 1"
+      "scope": "historical-source-identity-bound-by-candidate-1"
+    },
+    {
+      "id": "target.deepseek-harness",
+      "kind": "git-repository",
+      "uri": "https://github.com/deepseek-ai/deepseek-harness.git",
+      "revision": "0a53fb55bea101816fa226bb964ae2bed71c343b",
+      "scope": "pending-alpha.2-realization-target"
     }
   ],
   "activeLocks": [],
-  "candidateLocks": [
-    "../locks/weather-tool-linux-web-0.1.0-candidate.1/LOCK.json"
-  ]
+  "candidateLocks": []
 }
