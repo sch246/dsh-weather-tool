@@ -1,14 +1,15 @@
 {
   "$schema": "meta-intent/0.2/state",
   "id": "dsh-weather-tool",
-  "revision": "0.1.0-draft.4",
+  "revision": "0.1.0-draft.5",
   "status": "draft",
   "document": "STATE.md",
   "logs": [
     "../logs/2026-08-27-extraction-and-privacy.md",
     "../logs/2026-08-27-extraction-cutover-evidence.md",
     "../logs/2026-09-01-harness-alpha2-recomposition.md",
-    "../logs/2026-09-01-state-authority-and-runtime-acceptance.md"
+    "../logs/2026-09-01-state-authority-and-runtime-acceptance.md",
+    "../logs/2026-09-06-installation-maintenance-map.md"
   ],
   "protocol": {
     "id": "meta-intent",
@@ -32,6 +33,13 @@
       "uri": "https://github.com/deepseek-ai/deepseek-harness.git",
       "revision": "0a53fb55bea101816fa226bb964ae2bed71c343b",
       "scope": "pending-alpha.2-realization-target"
+    },
+    {
+      "id": "source.installation-map-review",
+      "kind": "git-repository",
+      "uri": "https://github.com/sch246/dsh-weather-tool.git",
+      "revision": "f268563d22c608e93212f301a604d19197200c15",
+      "scope": "source and documentation inspected for the 2026-09-06 installation map; not executed installation or acceptance evidence"
     }
   ],
   "activeLocks": [],

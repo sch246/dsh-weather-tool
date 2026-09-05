@@ -1,5 +1,7 @@
 # dsh-weather-tool
 
+Installation and maintenance start at [STATE](.intent/state/STATE.md), including target drift, ownership, removal and evidence limits.
+
 A small, Host-only DeepSeek Harness plugin that registers `get_weather` using the QWeather API. It returns current conditions and, when available, a three-day forecast.
 
 The repository contains no deployment credentials or default location. QWeather account identifiers, the account-specific API host, private-key path, and default location belong only in the target profile's local patch layer.
