@@ -28,31 +28,36 @@ Provide a small DeepSeek Harness plugin that lets the model query QWeather for c
 
 ## Installation and maintenance route
 
-Select the real Home/profile and CLI before registration. The current route is a Host-only bundle: [package manifest](../../package.json), [Bundle](../../cordis.patch.yml), [runtime](../../index.mjs). It has no generated client catalog or browser build. Check that no old profile-local weather executable or second `get_weather` owner remains in the composed profile. Retire the old registration only after the linked entry works; keep deployment data outside this repository.
+The Host-only runtime package is [`packages/dsh-weather-tool`](../../packages/dsh-weather-tool/package.json), with its [Bundle](../../packages/dsh-weather-tool/cordis.patch.yml) and [runtime](../../packages/dsh-weather-tool/index.mjs). The root is a private development workspace; `.intent/`, AGENTS, scripts, and tests remain there. It has no generated client catalog, browser build, or Harness source patch.
 
-From the repository root, use:
+From the repository root, `node scripts/plugin.mjs setup` and `node scripts/plugin.mjs inspect` report local paths and missing environment values without invoking DSH or mutating a profile. For an authorized install, select all three target values explicitly:
 
 ```sh
-DSH_CHECKOUT=/root/deepseek-harness DSH_PROFILE=web bash scripts/setup.sh
+export DSH_CHECKOUT=/absolute/path/to/deepseek-harness
+export DSH_HOME=/absolute/path/to/dsh-home
+export DSH_PROFILE=web
+node scripts/plugin.mjs setup --install
 ```
 
-[Setup](../../scripts/setup.sh) prefers the installed `dsh`, otherwise the selected checkout CLI, and adds this repository as package `dsh-weather-tool`. It does not provision QWeather, supply configuration, query weather or restart Web. Set `DSH_HOME` when operating a different Home; ensure an installed CLI addresses that same deployment.
+The checkout must contain `apps/cli/lib/bin.js`; Home must be an existing absolute directory. [Setup](../../scripts/plugin.mjs) calls this built CLI directly with `plugin --profile "$DSH_PROFILE" add <absolute-repository>/packages/dsh-weather-tool`. It does not provision QWeather, supply configuration, query weather, build Harness, or restart a service. `bash scripts/setup.sh --install` is an equivalent wrapper; Windows can use the Node entry after setting the same environment variables.
+
+Existing profile dependencies linked to the repository root must be re-registered from `packages/dsh-weather-tool` before this revision is activated. Preserve the local override and credentials. Verify the profile dependency, lockfile, resolved package link and Bundle membership together; ensure no second `get_weather` owner remains. No root forwarding runtime is provided.
 
 Supply an id-targeted `weather-tool` override in that profile's local `cordis.patch.yml` using the [configuration example](../../README.md#install). Required fields are `apiHost` (hostname without scheme/path), `keyId`, `projectId`, `privateKeyFile` (Ed25519) and `defaultLocation`; optional `timeoutMs` defaults to 15000 and must be at least 1000. Use an absolute private-key path readable by the service account. Configure before the next load because the shipped empty config deliberately fails at load. Retain the real values only in the profile and private evidence.
 
 Check dependency, profile lockfile, resolved link, Bundle membership and composed override together. A registered package with missing configuration is not an installed working tool. If CLI or tool-definition APIs change upstream, inspect current bundle loading, tool output and disposer APIs and adapt this small Host entry. Do not introduce a source patch or browser bundle merely to preserve old implementation details.
 
-For runtime changes, `npm test` exercises the synthetic mechanical checks already supplied; select additional checks for the changed behavior rather than treating that suite as semantic authority. Through the composed real profile, observe explicit/default location success, optional-forecast degradation, visible bad-config failure and disable/reload cleanup against WEATHER-001–005. Avoid publishing real query/output fixtures. A documentation-only map update is verified with JSON and link checks and does not require a real query.
+For runtime changes, `node --test` exercises the synthetic mechanical checks already supplied; select additional checks for the changed behavior rather than treating that suite as semantic authority. Through the composed real profile, observe explicit/default location success, optional-forecast degradation, visible bad-config failure and disable/reload cleanup against WEATHER-001–005. Avoid publishing real query/output fixtures. A documentation-only map update is verified with JSON and link checks and does not require a real query.
 
 ## Removal route
 
-Remove only the local override for row `weather-tool`, then run:
+Remove only the local override for row `weather-tool`, then use the same explicit `DSH_CHECKOUT`, `DSH_HOME`, and `DSH_PROFILE` values:
 
 ```sh
-DSH_CHECKOUT=/root/deepseek-harness DSH_PROFILE=web bash scripts/uninstall.sh
+node scripts/plugin.mjs remove --remove
 ```
 
-[Uninstall](../../scripts/uninstall.sh) removes package `dsh-weather-tool` through the same CLI selection and refuses a partial manual fallback when no CLI is available. It does not edit the override or delete credentials. Confirm the package is absent from profile resolution and Bundle membership and that a newly loaded profile exposes no stale `get_weather`. Preserve private keys and unrelated local configuration. On this deployment, an authorized activation uses `systemctl restart dsh-web`; a different profile uses its own managed service.
+The operation calls the selected built CLI with `plugin --profile "$DSH_PROFILE" remove dsh-weather-tool`. Without `--remove`, the command only inspects. [Remove](../../scripts/remove.sh) and the retained [uninstall alias](../../scripts/uninstall.sh) require the same flag. The CLI owns package and Bundle removal; scripts do not edit overrides or delete credentials. Confirm the package is absent from profile resolution and Bundle membership and that a newly loaded profile exposes no stale `get_weather`. Preserve private keys and unrelated local configuration. Activate through the selected profile's managed service only when separately authorized.
 
 ## Constraints and permissions
 

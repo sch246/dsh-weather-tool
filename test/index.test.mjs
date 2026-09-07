@@ -12,7 +12,7 @@ import {
   getWeatherText,
   requestJson,
   resolveConfig,
-} from '../index.mjs'
+} from '../packages/dsh-weather-tool/index.mjs'
 
 function fixtureConfig() {
   const directory = mkdtempSync(join(tmpdir(), 'dsh-weather-tool-'))

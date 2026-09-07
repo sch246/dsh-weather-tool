@@ -8,11 +8,25 @@ The repository contains no deployment credentials or default location. QWeather 
 
 ## Install
 
-Clone the repository and register its bundle in the target profile:
+Run from the repository root. Inspection is the default and does not invoke DSH or change a profile:
 
 ```sh
-bash scripts/setup.sh
+node scripts/plugin.mjs setup
+node scripts/plugin.mjs inspect
 ```
+
+For installation, set `DSH_CHECKOUT` to an absolute Harness checkout with `apps/cli/lib/bin.js`, `DSH_HOME` to an existing absolute Home directory, and `DSH_PROFILE` to the target profile name. All three are required; no installed CLI or default Home/profile is selected.
+
+```sh
+export DSH_CHECKOUT=/absolute/path/to/deepseek-harness
+export DSH_HOME=/absolute/path/to/dsh-home
+export DSH_PROFILE=web
+node scripts/plugin.mjs setup --install
+```
+
+This runs the selected checkout's built CLI directly with `plugin --profile "$DSH_PROFILE" add <absolute-repository>/packages/dsh-weather-tool`. The CLI owns dependency and Bundle registration. The script does not build Harness, supply deployment configuration, or restart services. Bash wrappers provide the same operations (`bash scripts/setup.sh --install`); the Node entry also works on Windows after setting the three environment variables in that shell.
+
+The root is now a private development workspace. Existing links to the old repository-root package must be replaced by the package-directory route above before activating this revision. Preserve the profile-local config override and verify dependency resolution, the profile lockfile, and Bundle membership together. There is no root runtime forwarding entry.
 
 Then add an id-targeted override to that profile's local `cordis.patch.yml`:
 
@@ -28,13 +42,7 @@ Then add an id-targeted override to that profile's local `cordis.patch.yml`:
 
 The placeholders are deliberately non-runnable. Keep the Ed25519 private key outside this repository and restrict its filesystem permissions.
 
-Restart the systemd-managed Web service:
-
-```sh
-systemctl restart dsh-web
-```
-
-These commands target the default `web` profile. `DSH_PROFILE` selects another profile and `DSH_CHECKOUT` locates a source checkout when no installed `dsh` command is available; restart that profile's own managed service instead of `dsh-web`.
+Activate the configured profile through its managed service only when authorized.
 
 ## Use
 
@@ -44,19 +52,22 @@ The plugin fails during load when required configuration or the private key is u
 
 ## Uninstall
 
-Remove the local config override, then run:
+Remove the plugin's id-targeted config override from `$DSH_HOME/profiles/$DSH_PROFILE/cordis.patch.yml`, then use the same three explicit environment variables:
 
 ```sh
-bash scripts/uninstall.sh
-systemctl restart dsh-web
+node scripts/plugin.mjs remove --remove
 ```
 
-The uninstall command removes only the bundle registration. It does not delete credentials or edit profile-local configuration.
+This calls the selected built CLI with `plugin --profile "$DSH_PROFILE" remove dsh-weather-tool`. `node scripts/plugin.mjs remove` only inspects. `bash scripts/remove.sh --remove` and the legacy `bash scripts/uninstall.sh --remove` are aliases. Removal changes package/Bundle registration; it preserves credentials and unrelated local configuration. Confirm resolution and Bundle membership are absent, then activate only through the target profile's managed service when separately authorized.
 
 ## Development
 
+The runtime package is [`packages/dsh-weather-tool`](packages/dsh-weather-tool); root `.intent/`, `AGENTS.md`, scripts, and tests support development and maintenance. Both root and package carry the same MIT license and original copyright.
+
 ```sh
-npm test
+node --check packages/dsh-weather-tool/index.mjs
+node --check scripts/plugin.mjs
+node --test
 ```
 
-The runtime entry is import-free so a linked external package does not depend on unpublished Harness workspace packages. Tool registration is scoped to the plugin lifecycle through `ctx.effect()`.
+Root `build` and `typecheck` scripts perform these JavaScript syntax checks; they emit no artifacts and do not claim TypeScript analysis. Root `test` retains the existing `node --test` suite. The workspace pins `pnpm@10.17.1` and needs no dependency installation for these checks.

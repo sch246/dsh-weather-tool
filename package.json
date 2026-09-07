@@ -1,49 +1,19 @@
 {
-  "name": "dsh-weather-tool",
-  "version": "0.1.0",
-  "description": "A small DeepSeek Harness tool for QWeather current conditions and three-day forecasts.",
+  "name": "dsh-weather-tool-workspace",
+  "private": true,
   "type": "module",
-  "main": "./index.mjs",
-  "exports": {
-    ".": "./index.mjs",
-    "./cordis.patch.yml": "./cordis.patch.yml",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    ".intent",
-    "AGENTS.md",
-    "index.mjs",
-    "cordis.patch.yml",
-    "scripts",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "setup": "bash scripts/setup.sh",
-    "uninstall": "bash scripts/uninstall.sh",
-    "test": "node --test"
-  },
-  "keywords": [
-    "dsh",
-    "dsh-plugin",
-    "deepseek-harness",
-    "weather",
-    "qweather"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sch246/dsh-weather-tool.git"
-  },
-  "bugs": {
-    "url": "https://github.com/sch246/dsh-weather-tool/issues"
-  },
   "license": "MIT",
+  "packageManager": "pnpm@10.17.1",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },
-  "dsh": {
-    "bundle": {
-      "patch": "./cordis.patch.yml"
-    }
+  "scripts": {
+    "build": "node --check packages/dsh-weather-tool/index.mjs && node --check scripts/plugin.mjs",
+    "typecheck": "node --check packages/dsh-weather-tool/index.mjs && node --check scripts/plugin.mjs",
+    "test": "node --test",
+    "setup": "node scripts/plugin.mjs setup",
+    "inspect": "node scripts/plugin.mjs inspect",
+    "remove": "node scripts/plugin.mjs remove",
+    "uninstall": "node scripts/plugin.mjs remove"
   }
 }

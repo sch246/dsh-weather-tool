@@ -1,7 +1,7 @@
 {
   "$schema": "meta-intent/0.2/state",
   "id": "dsh-weather-tool",
-  "revision": "0.1.0-draft.5",
+  "revision": "0.1.0-draft.6",
   "status": "draft",
   "document": "STATE.md",
   "logs": [
@@ -9,7 +9,8 @@
     "../logs/2026-08-27-extraction-cutover-evidence.md",
     "../logs/2026-09-01-harness-alpha2-recomposition.md",
     "../logs/2026-09-01-state-authority-and-runtime-acceptance.md",
-    "../logs/2026-09-06-installation-maintenance-map.md"
+    "../logs/2026-09-06-installation-maintenance-map.md",
+    "../logs/2026-09-07-package-workspace.md"
   ],
   "protocol": {
     "id": "meta-intent",
