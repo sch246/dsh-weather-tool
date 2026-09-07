@@ -1,3 +1,4 @@
+import { inspectProfile } from './profile-inspect.mjs'
 /** Inspect the selected deployment; mutate only through explicit install/removal flags. */
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync, statSync } from 'node:fs'
@@ -37,7 +38,10 @@ function main() {
     profileExists: profileDirectory ? existsSync(profileDirectory) : false,
     problems,
   }, null, 2))
-  if (!mutation) return
+  if (!mutation) {
+    console.log(JSON.stringify(inspectProfile(name, packageDirectory), null, 2))
+    return
+  }
   if (problems.length) throw new Error(problems.join('\n'))
   const result = spawnSync(process.execPath, [cli, 'plugin', '--profile', profile, mutation,
     mutation === 'add' ? packageDirectory : name], { cwd: root, env: process.env, stdio: 'inherit' })

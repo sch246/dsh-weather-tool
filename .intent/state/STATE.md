@@ -78,3 +78,5 @@ An import-free ESM entry can register a plain DSH tool definition and avoid unpu
 ## Current reality and open tensions
 
 The next target is DeepSeek Harness `dsh-v0.1.2-alpha.2` at revision `0a53fb55bea101816fa226bb964ae2bed71c343b`. The Host-only contribution still requires no Harness source patch or browser client. Candidate 1 binds historical source and deployment evidence for an earlier target and is not selected for this state. Alpha.2 linked-package resolution, profile-local override, composed configuration, explicit and default real queries, forecast degradation, lifecycle-owned registration, and credential-preserving uninstall remain unestablished by the retained evidence.
+
+Default inspection compares the selected profile dependency with its exact root lock importer, checks the installed package realpath and identity and the Bundle count, and reports any patch receipt summary. Installation consistency and matching this candidate package path are separate observations. Missing target variables report not-inspected; the lock reader uses the selected checkout CLI's installed js-yaml dependency.
